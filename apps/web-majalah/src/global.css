@@ -1,0 +1,81 @@
+/* Swiper Button */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 32px !important;
+  height: 48px !important;
+  color: white !important;
+  background-color: transparent !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+  transition: 300ms ease-in !important;
+}
+
+.swiper-button-prev {
+  left: 0px !important;
+}
+
+.swiper-button-next {
+  right: 0px !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: black !important;
+  overflow: hidden !important;
+}
+
+/* Swiper Thumb Button */
+.swiper-button-prev.swiper-button-thumb,
+.swiper-button-next.swiper-button-thumb {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  background-color: rgba(0, 0, 0, 0.25) !important;
+}
+
+.swiper-button-prev.swiper-button-thumb {
+  left: 8px !important;
+}
+
+.swiper-button-next.swiper-button-thumb {
+  right: 8px !important;
+}
+
+.swiper-button-prev.swiper-button-thumb:hover,
+.swiper-button-next.swiper-button-thumb:hover {
+  background-color: rgba(256, 256, 256, 0.5) !important;
+  overflow: hidden !important;
+}
+
+/* Arrow */
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: x-small !important;
+  font-weight: bolder !important;
+}
+
+.swiper-button-prev.swiper-button-thumb:after,
+.swiper-button-next.swiper-button-thumb:after {
+  font-size: xx-small !important;
+  font-weight: bold !important;
+}
+
+/* Slide */
+.swiper-slide-visible:hover {
+  opacity: 1 !important;
+}
+
+.swiper-slide-thumb-active {
+  opacity: 1 !important;
+}
+
+.swiper-initialized {
+  border-radius: 8px !important;
+}
+
+/* Link */
+.link {
+  color: unset;
+  text-decoration: none;
+  line-height: 0;
+}
