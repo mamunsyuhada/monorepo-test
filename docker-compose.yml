@@ -16,3 +16,11 @@ services:
       - "3001:3000"
     environment:
       - NODE_ENV=production
+  web-majalah:
+    build:
+      context: .
+      dockerfile: ./apps/web-majalah/Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production

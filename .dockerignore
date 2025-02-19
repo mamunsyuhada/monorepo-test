@@ -3,6 +3,16 @@ dist
 .next
 .pnpm
 turbo
+out
 .DS_Store
 .env
 .git
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile
+*/*/Dockerfile
+Dockerfile.*
+README.md
+LICENSE
+.vscode
+.idea
