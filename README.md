@@ -1,3 +1,9 @@
+# How to start
+
+```sh
+docker-compose up -d
+```
+
 # Turborepo starter
 
 This is an official starter Turborepo.
