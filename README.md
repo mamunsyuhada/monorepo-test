@@ -1,7 +1,15 @@
 # How to start
 
+### Development
+
 ```sh
-docker-compose up -d
+docker-compose -f docker-compose.dev.yml up --build
+```
+
+### Production
+
+```sh
+docker-compose -f docker-compose.yml up --build
 ```
 
 # Turborepo starter
