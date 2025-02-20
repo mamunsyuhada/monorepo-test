@@ -1,15 +1,91 @@
-# How to start
+# About Project
 
-### Development
+Proyek ini menggunakan Docker untuk containerization, yang memungkinkan Anda untuk menjalankan aplikasi dalam lingkungan yang terisolasi. Berikut adalah langkah-langkah untuk menjalankan proyek ini dalam mode produksi dan pengembangan.
+
+# Structure
 
 ```sh
-docker-compose -f docker-compose.dev.yml up --build
+root/
+│-- apps/
+│   │-- web/
+│   │   -- .
+│   │   -- .
+│   │   -- Dockerfile
+│   │-- docs/
+│   │   -- .
+│   │   -- .
+│   │   -- Dockerfile
+│   │-- web-majalah/
+│   │   -- .
+│   │   -- .
+│   │   -- Dockerfile
+│-- packages/
+│-- docker-compose.dev.yml
+│-- docker-compose.yml
+│-- Dockerfile.dev
+│-- turbo.json
+│-- package.json
+│-- pnpm-workspace.yaml
 ```
 
-### Production
+Proyek ini memiliki dua file docker-compose:
 
-```sh
-docker-compose -f docker-compose.yml up --build
+- `docker-compose.yml`: Digunakan untuk menjalankan aplikasi dalam mode produksi.
+- `docker-compose.dev.yml`: Digunakan untuk menjalankan aplikasi dalam mode pengembangan dengan hot reload.
+
+# Production Mode
+
+File `docker-compose.yml` mendefinisikan tiga layanan:
+
+- `web`: Aplikasi utama yang - berjalan di port 3000.
+  [http://localhost:3000/](http://localhost:3000/)
+- `docs`: Aplikasi dokumentasi yang berjalan di port 3001.
+  [http://localhost:3001/](http://localhost:3001/)
+- `web-majalah`: Aplikasi majalah yang berjalan di port 3002.
+  [http://localhost:3002/](http://localhost:3002/)
+
+Contoh konfigurasi untuk layanan web:
+
+```
+services:
+web:
+  build:
+    context: .
+    dockerfile: ./apps/web/Dockerfile
+  ports:
+    - "3000:3000"
+  environment:
+    - NODE_ENV=production
+```
+
+# Evidences
+
+![images](.img/images.png)
+![runningcontainers](.img/runningcontainers.png)
+
+# Mode Dev
+
+File `docker-compose.dev.yml` mendefinisikan layanan yang sama dengan `docker-compose.yml`, tetapi dengan tambahan volume untuk mendukung hot reload:
+
+```
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: turborepo-dev
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "3002:3002"
+    volumes:
+      - .:/app
+```
+
+### To run dev mode
+
+```
+docker-compose -f docker-compose.dev.yml up --build -d
 ```
 
 # Turborepo starter
