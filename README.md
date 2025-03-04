@@ -6,36 +6,60 @@ Proyek ini menggunakan Docker untuk containerization, yang memungkinkan Anda unt
 
 ```sh
 root/
+│-- .devcontainer/
+│   │-- devcontainer.json
 │-- apps/
 │   │-- web/
+│   │   -- .
 │   │   -- .
 │   │   -- .
 │   │   -- Dockerfile
 │   │-- docs/
 │   │   -- .
 │   │   -- .
+│   │   -- .
 │   │   -- Dockerfile
 │   │-- web-majalah/
 │   │   -- .
 │   │   -- .
+│   │   -- .
 │   │   -- Dockerfile
 │-- packages/
-│-- docker-compose.dev.yml
 │-- docker-compose.yml
-│-- Dockerfile.dev
 │-- turbo.json
 │-- package.json
 │-- pnpm-workspace.yaml
 ```
 
-Proyek ini memiliki dua file docker-compose:
+# Mode Dev
 
-- `docker-compose.yml`: Digunakan untuk menjalankan aplikasi dalam mode produksi.
-- `docker-compose.dev.yml`: Digunakan untuk menjalankan aplikasi dalam mode pengembangan dengan hot reload.
+Berikut adalah penjelasan singkat untuk file `devcontainer.json`:
 
-# Production Mode
+- image: Gambar Docker yang digunakan, `mcr.microsoft.com/devcontainers/typescript-node:0-20`
+- waitFor: Menunggu hingga perintah `onCreateCommand` dijalankan.
+- updateContentCommand: Diberikan perintah untuk memperbarui `node_modules`, `pnpm install`.
+- postAttachCommand: Perintah setelah selesai instalasi, `pnpm dev`.
+- customizations:
+  - vscode:
+    - Ekstensi yang diinstal: Code Spell Checker, ESLint, Prettier, Markdownlint, Remote Containers.
+- portsAttributes:
+  - `3000`, `3001`, `3002`: Port yang diteruskan dengan label "Application" dan membuka pratinjau otomatis.
 
-File `docker-compose.yml` mendefinisikan tiga layanan:
+File ini mengkonfigurasi lingkungan pengembangan dalam container Docker untuk konsistensi dan kemudahan pengaturan.
+
+## Untuk menjalankan mode development menggunakan .devcontainer, ikuti langkah-langkah berikut:
+
+1. Buka repo ini di Visual Studio Code: Pastikan Anda membuka folder proyek yang berisi file devcontainer.json.
+
+2. Buka Command Palette: Tekan Cmd+Shift+P (di Mac) untuk membuka Command Palette.
+
+3. Pilih Perintah untuk Membuka Folder dalam Container: Ketik dan pilih Remote-Containers: Reopen in Container.
+
+4. Tunggu Hingga Container Dibuat dan Terhubung: Visual Studio Code akan membuat dan menghubungkan ke container berdasarkan konfigurasi di devcontainer.json.
+
+5. Jalankan Perintah Pengembangan: Setelah terhubung, perintah pnpm dev akan dijalankan secara otomatis sesuai dengan konfigurasi postAttachCommand di devcontainer.json.
+
+6. Akses Aplikasi: Aplikasi akan berjalan di port yang telah ditentukan (3000, 3001, 3002). Anda dapat mengaksesnya melalui browser:
 
 - `web`: Aplikasi utama yang - berjalan di port 3000.
   [http://localhost:3000/](http://localhost:3000/)
@@ -43,6 +67,8 @@ File `docker-compose.yml` mendefinisikan tiga layanan:
   [http://localhost:3001/](http://localhost:3001/)
 - `web-majalah`: Aplikasi majalah yang berjalan di port 3002.
   [http://localhost:3002/](http://localhost:3002/)
+
+# Production Mode
 
 Contoh konfigurasi untuk layanan web:
 
@@ -62,31 +88,6 @@ web:
 
 ![images](.img/images.png)
 ![runningcontainers](.img/runningcontainers.png)
-
-# Mode Dev
-
-File `docker-compose.dev.yml` mendefinisikan layanan yang sama dengan `docker-compose.yml`, tetapi dengan tambahan volume untuk mendukung hot reload:
-
-```
-services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    container_name: turborepo-dev
-    ports:
-      - "3000:3000"
-      - "3001:3001"
-      - "3002:3002"
-    volumes:
-      - .:/app
-```
-
-### To run dev mode
-
-```
-docker-compose -f docker-compose.dev.yml up --build -d
-```
 
 # Turborepo starter
 
